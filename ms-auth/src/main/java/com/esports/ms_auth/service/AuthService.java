@@ -31,13 +31,13 @@ public class AuthService {
     public AuthResponse register(RegisterRequest registerRequest) {
         Usuario user = new Usuario();
 
-        user.setUsuario(registerRequest.getUsername());
+        user.setUsername(registerRequest.getUsername());
         user.setPassword(encoder.encode(registerRequest.getPassword()));
         user.setRole("ROLE_USER");
 
         usuarioRepository.save(user);
-        String acceso = jwtUtil.generarToken(user.getUsuario(), user.getRole());
-        String refresh = generarRefreshToken(user.getUsuario());
+        String acceso = jwtUtil.generarToken(user.getUsername(), user.getRole());
+        String refresh = generarRefreshToken(user.getUsername());
 
         return new AuthResponse(acceso, refresh);
     }
@@ -50,8 +50,8 @@ public class AuthService {
         Usuario user = usuarioRepository.findByUsername(loginRequest.getUsername())
                 .orElseThrow(() -> new RuntimeException("Usuario inválido"));
 
-        String acceso = jwtUtil.generarToken(user.getUsuario(), user.getRole());
-        String refresh = generarRefreshToken(user.getUsuario());
+        String acceso = jwtUtil.generarToken(user.getUsername(), user.getRole());
+        String refresh = generarRefreshToken(user.getUsername());
 
         return new AuthResponse(acceso, refresh);
     }
@@ -68,7 +68,7 @@ public class AuthService {
         Usuario user = usuarioRepository.findByUsername(token.getUsername())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        String nuevoAcceso = jwtUtil.generarToken(user.getUsuario(), user.getRole());
+        String nuevoAcceso = jwtUtil.generarToken(user.getUsername(), user.getRole());
 
         return new AuthResponse(nuevoAcceso, refreshToken);
     }
