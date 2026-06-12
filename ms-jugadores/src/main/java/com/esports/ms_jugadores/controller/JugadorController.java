@@ -41,7 +41,8 @@ public class JugadorController {
                         @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Jugador creado"),
                         @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Datos erróneos"),
                         @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "No autorizado"),
-                        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Acceso denegado")
+                        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Acceso denegado"),
+                        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "409", description = "El jugador ya existe")
         })
         @PostMapping
         @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
