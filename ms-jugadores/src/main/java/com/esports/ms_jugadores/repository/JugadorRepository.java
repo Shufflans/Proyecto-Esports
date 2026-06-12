@@ -17,6 +17,4 @@ public interface JugadorRepository extends JpaRepository<Jugador, Long> {
     List<Jugador> findByIdEquipoActual(Long idEquipoActual);
 
     List<Jugador> findByActivoTrue();
-
-    List<Jugador> findByPais(String pais);
 }
