@@ -19,6 +19,9 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import org.springframework.hateoas.EntityModel;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import com.esports.ms_jugadores.dto.ApiResponse;
 import com.esports.ms_jugadores.dto.JugadorRequest;
 import com.esports.ms_jugadores.dto.JugadorResponse;
@@ -89,16 +92,22 @@ public class JugadorController {
         })
         @GetMapping("/{id}")
         @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-        public ResponseEntity<ApiResponse<JugadorResponse>> buscarJugadoresId(@PathVariable Long id) {
+        public ResponseEntity<ApiResponse<EntityModel<JugadorResponse>>> buscarJugadoresId(@PathVariable Long id) {
                 log.info("GET /api/v1/jugadores - ID: {}", id);
 
                 JugadorResponse encontrado = jugadorService.buscarPorId(id);
+                EntityModel<JugadorResponse> recurso = EntityModel.of(encontrado);
+
+                recurso.add(linkTo(methodOn(JugadorController.class).buscarJugadoresId(id)).withSelfRel());
+                recurso.add(linkTo(methodOn(JugadorController.class).listarJugadores()).withRel("all"));
+                recurso.add(linkTo(methodOn(JugadorController.class).actualizarJugador(id, null)).withRel("update"));
+                recurso.add(linkTo(methodOn(JugadorController.class).desactivarJugador(id)).withRel("delete"));
 
                 return ResponseEntity.ok(
-                                ApiResponse.<JugadorResponse>builder()
+                                ApiResponse.<EntityModel<JugadorResponse>>builder()
                                                 .success(true)
                                                 .message("Jugador encontrado")
-                                                .data(encontrado)
+                                                .data(recurso)
                                                 .build());
         }
 
