@@ -34,7 +34,7 @@ public class JugadorService {
             log.warn("El nickname del jugador ya existe.");
 
             throw new NickNameDuplicadoException(
-                    "No se pudo registrar, el nickname " + jr.getNickname() + "Ya existe.");
+                    "No se pudo registrar, el nickname " + jr.getNickname() + " ya existe.");
         }
 
         Integer edad = Period.between(jr.getFechaNacimiento(), LocalDate.now()).getYears();
@@ -67,7 +67,7 @@ public class JugadorService {
         Jugador jugadorEncontrado = jugadorRepository.findById(id)
                 .orElseThrow(() -> {
                     log.warn("Jugador no encontrado, ID: {}", id);
-                    return new JugadorNoEncontradoException("Jugador con la id " + id + "No encontrado");
+                    return new JugadorNoEncontradoException("Jugador con la id " + id + " no encontrado");
                 });
 
         return mapearAResponse(jugadorEncontrado);
@@ -95,13 +95,13 @@ public class JugadorService {
     public JugadorResponse actualizar(Long id, JugadorRequest jr) {
         Jugador jugadorEncontrado = jugadorRepository.findById(id).orElseThrow(() -> {
             log.warn("No se han encontrado jugadores con la ID: {}", id);
-            return new JugadorNoEncontradoException("Jugador con la ID " + id + "No encontrado");
+            return new JugadorNoEncontradoException("Jugador con la ID " + id + " no encontrado");
         });
 
         if (!jugadorEncontrado.getNickname().equals(jr.getNickname())
                 && jugadorRepository.existsByNickname(jr.getNickname())) {
             log.warn("El nuevo nickname '{}' ya está siendo ocupado por otro jugador", jr.getNickname());
-            throw new NickNameDuplicadoException("El nickname: " + jr.getNickname() + " Ya existe");
+            throw new NickNameDuplicadoException("El nickname: " + jr.getNickname() + " ya existe");
         }
 
         jugadorEncontrado.setNickname(jr.getNickname());
@@ -123,7 +123,7 @@ public class JugadorService {
 
         Jugador jugadorEncontrado = jugadorRepository.findById(id).orElseThrow(() -> {
             log.warn("Jugador con ID: '{}' no ha sido encontrado", id);
-            return new JugadorNoEncontradoException("Jugador con ID: " + id + " No encontrado");
+            return new JugadorNoEncontradoException("Jugador con ID: " + id + " no encontrado");
         });
 
         jugadorEncontrado.setActivo(false);
