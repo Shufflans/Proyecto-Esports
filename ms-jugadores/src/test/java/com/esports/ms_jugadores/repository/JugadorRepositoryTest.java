@@ -17,208 +17,208 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class JugadorRepositoryTest {
 
-    @Autowired
-    private JugadorRepository jugadorRepository;
+        @Autowired
+        private JugadorRepository jugadorRepository;
 
-    @Test
-    void debeBuscarPorId() {
-        Jugador jugador = Jugador.builder()
-                .nickname("Shufflan")
-                .nombreReal("Camilo Covarrubias")
-                .pais("Chile")
-                .fechaNacimiento(LocalDate.parse("2000-07-18"))
-                .rol("USER")
-                .activo(true)
-                .salarioMensual(10000.0)
-                .build();
-        Jugador guardado = jugadorRepository.save(jugador);
+        @Test
+        void debeBuscarPorId() {
+                Jugador jugador = Jugador.builder()
+                                .nickname("Shufflan")
+                                .nombreReal("Camilo Covarrubias")
+                                .pais("Chile")
+                                .fechaNacimiento(LocalDate.parse("2000-07-18"))
+                                .rol("USER")
+                                .activo(true)
+                                .salarioMensual(10000.0)
+                                .build();
+                Jugador guardado = jugadorRepository.save(jugador);
 
-        Optional<Jugador> resultado = jugadorRepository.findById(guardado.getId());
+                Optional<Jugador> resultado = jugadorRepository.findById(guardado.getId());
 
-        assertTrue(resultado.isPresent());
-        assertEquals("Shufflan", resultado.get().getNickname());
-        assertEquals(LocalDate.parse("2000-07-18"), resultado.get().getFechaNacimiento());
-    }
+                assertTrue(resultado.isPresent());
+                assertEquals("Shufflan", resultado.get().getNickname());
+                assertEquals(LocalDate.parse("2000-07-18"), resultado.get().getFechaNacimiento());
+        }
 
-    @Test
-    void debeRevisarSiExiste() {
-        Jugador jugador = Jugador.builder()
-                .nickname("Shufflan")
-                .nombreReal("Camilo Covarrubias")
-                .pais("Chile")
-                .fechaNacimiento(LocalDate.parse("2000-07-18"))
-                .rol("USER")
-                .activo(true)
-                .salarioMensual(10000.0)
-                .build();
-        Jugador guardado = jugadorRepository.save(jugador);
+        @Test
+        void debeRevisarSiExiste() {
+                Jugador jugador = Jugador.builder()
+                                .nickname("Shufflan")
+                                .nombreReal("Camilo Covarrubias")
+                                .pais("Chile")
+                                .fechaNacimiento(LocalDate.parse("2000-07-18"))
+                                .rol("USER")
+                                .activo(true)
+                                .salarioMensual(10000.0)
+                                .build();
+                Jugador guardado = jugadorRepository.save(jugador);
 
-        boolean resultado = jugadorRepository.existsByNickname(guardado.getNickname());
+                boolean resultado = jugadorRepository.existsByNickname(guardado.getNickname());
 
-        assertTrue(resultado);
-    }
+                assertTrue(resultado);
+        }
 
-    @Test
-    void debeRetornarListaPorPaises() {
-        Jugador jugador = Jugador.builder()
-                .nickname("Shufflan")
-                .nombreReal("Camilo Covarrubias")
-                .pais("Chile")
-                .fechaNacimiento(LocalDate.parse("2000-07-18"))
-                .rol("USER")
-                .activo(true)
-                .salarioMensual(10000.0)
-                .build();
+        @Test
+        void debeRetornarListaPorPaises() {
+                Jugador jugador = Jugador.builder()
+                                .nickname("Shufflan")
+                                .nombreReal("Camilo Covarrubias")
+                                .pais("Chile")
+                                .fechaNacimiento(LocalDate.parse("2000-07-18"))
+                                .rol("USER")
+                                .activo(true)
+                                .salarioMensual(10000.0)
+                                .build();
 
-        Jugador jugador2 = Jugador.builder()
-                .nickname("nakaseomyces")
-                .nombreReal("Perla Valentina")
-                .pais("Chile")
-                .fechaNacimiento(LocalDate.parse("2000-05-02"))
-                .rol("USER")
-                .activo(true)
-                .salarioMensual(10000.0)
-                .build();
+                Jugador jugador2 = Jugador.builder()
+                                .nickname("nakaseomyces")
+                                .nombreReal("Perla Valentina")
+                                .pais("Chile")
+                                .fechaNacimiento(LocalDate.parse("2000-05-02"))
+                                .rol("USER")
+                                .activo(true)
+                                .salarioMensual(10000.0)
+                                .build();
 
-        jugadorRepository.save(jugador);
-        jugadorRepository.save(jugador2);
+                jugadorRepository.save(jugador);
+                jugadorRepository.save(jugador2);
 
-        List<Jugador> resultado = jugadorRepository.findByPais("Chile");
+                List<Jugador> resultado = jugadorRepository.findByPais("Chile");
 
-        assertFalse(resultado.isEmpty());
-        assertTrue(resultado.size() >= 2);
-    }
+                assertFalse(resultado.isEmpty());
+                assertTrue(resultado.size() >= 2);
+        }
 
-    @Test
-    void debeRetornarListaPorIdEquipos() {
-        Jugador jugador = Jugador.builder()
-                .nickname("Shufflan")
-                .nombreReal("Camilo Covarrubias")
-                .pais("Chile")
-                .fechaNacimiento(LocalDate.parse("2000-07-18"))
-                .rol("USER")
-                .activo(true)
-                .idEquipoActual(2L)
-                .salarioMensual(10000.0)
-                .build();
+        @Test
+        void debeRetornarListaPorIdEquipos() {
+                Jugador jugador = Jugador.builder()
+                                .nickname("Shufflan")
+                                .nombreReal("Camilo Covarrubias")
+                                .pais("Chile")
+                                .fechaNacimiento(LocalDate.parse("2000-07-18"))
+                                .rol("USER")
+                                .activo(true)
+                                .idEquipoActual(2L)
+                                .salarioMensual(10000.0)
+                                .build();
 
-        Jugador jugador2 = Jugador.builder()
-                .nickname("nakaseomyces")
-                .nombreReal("Perla Valentina")
-                .pais("Chile")
-                .fechaNacimiento(LocalDate.parse("2000-05-02"))
-                .rol("USER")
-                .activo(true)
-                .idEquipoActual(2L)
-                .salarioMensual(10000.0)
-                .build();
+                Jugador jugador2 = Jugador.builder()
+                                .nickname("nakaseomyces")
+                                .nombreReal("Perla Valentina")
+                                .pais("Chile")
+                                .fechaNacimiento(LocalDate.parse("2000-05-02"))
+                                .rol("USER")
+                                .activo(true)
+                                .idEquipoActual(2L)
+                                .salarioMensual(10000.0)
+                                .build();
 
-        jugadorRepository.save(jugador);
-        jugadorRepository.save(jugador2);
+                jugadorRepository.save(jugador);
+                jugadorRepository.save(jugador2);
 
-        List<Jugador> resultado = jugadorRepository.findByIdEquipoActual(2L);
+                List<Jugador> resultado = jugadorRepository.findByIdEquipoActual(2L);
 
-        assertFalse(resultado.isEmpty());
-        assertTrue(resultado.size() >= 2);
-    }
+                assertFalse(resultado.isEmpty());
+                assertTrue(resultado.size() >= 2);
+        }
 
-    @Test
-    void debeRetornarJugadorQueEsteActivo() {
-        Jugador jugador = Jugador.builder()
-                .nickname("Shufflan")
-                .nombreReal("Camilo Covarrubias")
-                .pais("Chile")
-                .fechaNacimiento(LocalDate.parse("2000-07-18"))
-                .rol("USER")
-                .activo(true)
-                .salarioMensual(10000.0)
-                .build();
+        @Test
+        void debeRetornarJugadorQueEsteActivo() {
+                Jugador jugador = Jugador.builder()
+                                .nickname("Shufflan")
+                                .nombreReal("Camilo Covarrubias")
+                                .pais("Chile")
+                                .fechaNacimiento(LocalDate.parse("2000-07-18"))
+                                .rol("USER")
+                                .activo(true)
+                                .salarioMensual(10000.0)
+                                .build();
 
-        Jugador jugador2 = Jugador.builder()
-                .nickname("nakaseomyces")
-                .nombreReal("Perla Valentina")
-                .pais("Chile")
-                .fechaNacimiento(LocalDate.parse("2000-05-02"))
-                .rol("USER")
-                .activo(true)
-                .salarioMensual(10000.0)
-                .build();
+                Jugador jugador2 = Jugador.builder()
+                                .nickname("nakaseomyces")
+                                .nombreReal("Perla Valentina")
+                                .pais("Chile")
+                                .fechaNacimiento(LocalDate.parse("2000-05-02"))
+                                .rol("USER")
+                                .activo(true)
+                                .salarioMensual(10000.0)
+                                .build();
 
-        jugadorRepository.save(jugador);
-        jugadorRepository.save(jugador2);
+                jugadorRepository.save(jugador);
+                jugadorRepository.save(jugador2);
 
-        List<Jugador> resultado = jugadorRepository.findByActivoTrue();
+                List<Jugador> resultado = jugadorRepository.findByActivoTrue();
 
-        assertFalse(resultado.isEmpty());
-        assertTrue(resultado.size() >= 2);
-    }
+                assertFalse(resultado.isEmpty());
+                assertTrue(resultado.size() >= 2);
+        }
 
-    @Test
-    void debeGuardarjugador() {
-        Jugador jugador = Jugador.builder()
-                .nickname("Shufflan")
-                .nombreReal("Camilo Covarrubias")
-                .pais("Chile")
-                .fechaNacimiento(LocalDate.parse("2000-07-18"))
-                .rol("USER")
-                .activo(true)
-                .salarioMensual(10000.0)
-                .build();
+        @Test
+        void debeGuardarjugador() {
+                Jugador jugador = Jugador.builder()
+                                .nickname("Shufflan")
+                                .nombreReal("Camilo Covarrubias")
+                                .pais("Chile")
+                                .fechaNacimiento(LocalDate.parse("2000-07-18"))
+                                .rol("USER")
+                                .activo(true)
+                                .salarioMensual(10000.0)
+                                .build();
 
-        Jugador resultado = jugadorRepository.save(jugador);
+                Jugador resultado = jugadorRepository.save(jugador);
 
-        assertEquals("Shufflan", resultado.getNickname());
-    }
+                assertEquals("Shufflan", resultado.getNickname());
+        }
 
-    @Test
-    void debeListarTodosLosJugadores() {
-        Jugador jugador = Jugador.builder()
-                .nickname("Shufflan")
-                .nombreReal("Camilo Covarrubias")
-                .pais("Chile")
-                .fechaNacimiento(LocalDate.parse("2000-07-18"))
-                .rol("USER")
-                .activo(true)
-                .salarioMensual(10000.0)
-                .build();
+        @Test
+        void debeListarTodosLosJugadores() {
+                Jugador jugador = Jugador.builder()
+                                .nickname("Shufflan")
+                                .nombreReal("Camilo Covarrubias")
+                                .pais("Chile")
+                                .fechaNacimiento(LocalDate.parse("2000-07-18"))
+                                .rol("USER")
+                                .activo(true)
+                                .salarioMensual(10000.0)
+                                .build();
 
-        Jugador jugador2 = Jugador.builder()
-                .nickname("nakaseomyces")
-                .nombreReal("Perla Valentina")
-                .pais("Chile")
-                .fechaNacimiento(LocalDate.parse("2000-05-02"))
-                .rol("USER")
-                .activo(true)
-                .salarioMensual(10000.0)
-                .build();
+                Jugador jugador2 = Jugador.builder()
+                                .nickname("nakaseomyces")
+                                .nombreReal("Perla Valentina")
+                                .pais("Chile")
+                                .fechaNacimiento(LocalDate.parse("2000-05-02"))
+                                .rol("USER")
+                                .activo(true)
+                                .salarioMensual(10000.0)
+                                .build();
 
-        jugadorRepository.save(jugador);
-        jugadorRepository.save(jugador2);
+                jugadorRepository.save(jugador);
+                jugadorRepository.save(jugador2);
 
-        List<Jugador> resultado = jugadorRepository.findAll();
+                List<Jugador> resultado = jugadorRepository.findAll();
 
-        assertFalse(resultado.isEmpty());
-        assertTrue(resultado.size() >= 2);
-    }
+                assertFalse(resultado.isEmpty());
+                assertTrue(resultado.size() >= 2);
+        }
 
-    @Test
-    void debeEliminarUnJugador() {
-        Jugador jugador = Jugador.builder()
-                .nickname("Shufflan")
-                .nombreReal("Camilo Covarrubias")
-                .pais("Chile")
-                .fechaNacimiento(LocalDate.parse("2000-07-18"))
-                .rol("USER")
-                .activo(true)
-                .salarioMensual(10000.0)
-                .build();
+        @Test
+        void debeEliminarUnJugador() {
+                Jugador jugador = Jugador.builder()
+                                .nickname("Shufflan")
+                                .nombreReal("Camilo Covarrubias")
+                                .pais("Chile")
+                                .fechaNacimiento(LocalDate.parse("2000-07-18"))
+                                .rol("USER")
+                                .activo(true)
+                                .salarioMensual(10000.0)
+                                .build();
 
-        jugadorRepository.save(jugador);
-        jugadorRepository.delete(jugador);
+                jugadorRepository.save(jugador);
+                jugadorRepository.delete(jugador);
 
-        Optional<Jugador> resultado = jugadorRepository.findById(jugador.getId());
+                Optional<Jugador> resultado = jugadorRepository.findById(jugador.getId());
 
-        assertFalse(resultado.isPresent());
-    }
+                assertFalse(resultado.isPresent());
+        }
 
 }
