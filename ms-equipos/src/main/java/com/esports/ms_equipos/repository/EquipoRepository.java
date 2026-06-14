@@ -17,4 +17,8 @@ public interface EquipoRepository extends JpaRepository<Equipo, Long> {
 
     List<Equipo> findByActivoTrue();
 
+    Optional<Equipo> findById(Long id);
+
+    Boolean existsByNombreEquipoAndRegionAndIdNot(String nombreEquipo, String region, Long id);
+
 }

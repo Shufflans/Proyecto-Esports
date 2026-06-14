@@ -58,4 +58,9 @@ public class Equipo {
         st.setEquipo(this);
     }
 
+    public void agregarRoster(RosterHistorico rh) {
+        rosterHistorico.add(rh);
+        rh.setEquipo(this);
+    }
+
 }

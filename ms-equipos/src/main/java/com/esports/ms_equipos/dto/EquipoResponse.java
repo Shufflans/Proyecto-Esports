@@ -18,4 +18,6 @@ public class EquipoResponse {
     private LocalDate fechaFundacion;
     private Integer rankingMundial;
     private Boolean activo;
+    private Integer cantidadStaff;
+    private Integer cantidadRoster;
 }

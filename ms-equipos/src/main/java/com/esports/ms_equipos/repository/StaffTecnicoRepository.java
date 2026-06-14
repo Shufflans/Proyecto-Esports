@@ -11,4 +11,6 @@ public interface StaffTecnicoRepository extends JpaRepository<StaffTecnico, Long
 
     List<StaffTecnico> findByEquipoIdAndRolAndActivoTrue(Long id, String rol);
 
+    Boolean existsByEquipoIdAndRol(Long id, String rol);
+
 }
