@@ -19,6 +19,6 @@ public class JugadorResponse {
     private LocalDate fechaNacimiento;
     private String rol;
     private Long idEquipoActual;
-    private boolean activo;
+    private Boolean activo;
     private Double salarioMensual;
 }
