@@ -21,7 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "staff_Tecnico")
+@Table(name = "staff_tecnico")
 @Entity
 public class StaffTecnico {
 
