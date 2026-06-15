@@ -31,18 +31,18 @@ public class Equipo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false, name = "Nombre_Equipo")
+    @Column(unique = true, nullable = false, name = "nombre_equipo")
     private String nombreEquipo;
 
-    @Column(nullable = false, name = "Region")
+    @Column(nullable = false, name = "region")
     private String region;
 
-    @Column(nullable = false, name = "Fecha_Fundacion")
+    @Column(nullable = false, name = "fecha_fundacion")
     private LocalDate fechaFundacion;
 
     private Integer rankingMundial;
 
-    @Column(nullable = false, name = "Equipo_Activo")
+    @Column(nullable = false, name = "activo")
     private Boolean activo;
 
     @OneToMany(mappedBy = "equipo", cascade = CascadeType.ALL, orphanRemoval = true)

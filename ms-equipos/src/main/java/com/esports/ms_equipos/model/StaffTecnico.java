@@ -29,15 +29,15 @@ public class StaffTecnico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "Nombre_Empleado", nullable = false)
+    @Column(name = "nombre_staff", nullable = false)
     private String nombreStaff;
 
-    @Column(name = "Rol", nullable = false)
+    @Column(name = "rol", nullable = false)
     private String rol;
 
     private Double salarioMensual;
 
-    @Column(nullable = false, name = "Activo")
+    @Column(nullable = false, name = "activo")
     private Boolean activo;
 
     @ManyToOne
