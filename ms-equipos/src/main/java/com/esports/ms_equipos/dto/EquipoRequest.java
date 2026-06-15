@@ -26,6 +26,8 @@ public class EquipoRequest {
     @NotNull(message = "La fecha de fundación es obligatoria")
     private LocalDate fechaFundacion;
 
+    private Integer rankingMundial;
+
     @NotNull(message = "El estado activo/inactivo del equipo es obligatorio")
     private Boolean activo;
 }
