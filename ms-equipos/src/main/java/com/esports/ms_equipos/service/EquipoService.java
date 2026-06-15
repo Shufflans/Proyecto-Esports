@@ -10,9 +10,7 @@ import com.esports.ms_equipos.dto.EquipoRequest;
 import com.esports.ms_equipos.dto.EquipoResponse;
 import com.esports.ms_equipos.dto.JugadorResponse;
 import com.esports.ms_equipos.dto.RosterHistoricoRequest;
-import com.esports.ms_equipos.dto.RosterHistoricoResponse;
 import com.esports.ms_equipos.dto.StaffTecnicoRequest;
-import com.esports.ms_equipos.dto.StaffTecnicoResponse;
 import com.esports.ms_equipos.exception.EquipoNoEncontradoException;
 import com.esports.ms_equipos.exception.JugadorNoExisteException;
 import com.esports.ms_equipos.exception.NombreYRegionYaExistenException;
@@ -174,7 +172,7 @@ public class EquipoService {
     }
 
     @Transactional
-    public RosterHistoricoResponse terminarContrato(Long rosterId) {
+    public void terminarContrato(Long rosterId) {
         log.info("Terminando contrato del roster con ID: {}", rosterId);
 
         RosterHistorico rosterRecuperado = rosterHistoricoRepository.findById(rosterId).orElseThrow(
@@ -182,12 +180,10 @@ public class EquipoService {
 
         rosterRecuperado.setFechaFin(LocalDate.now());
         rosterHistoricoRepository.save(rosterRecuperado);
-
-        return mapearARosterResponse(rosterRecuperado);
     }
 
     @Transactional
-    public StaffTecnicoResponse despedirStaff(Long staffId) {
+    public void despedirStaff(Long staffId) {
         log.info("Desactivando a staff con ID: {}", staffId);
 
         StaffTecnico staffRecuperado = staffTecnicoRepository.findById(staffId)
@@ -195,8 +191,6 @@ public class EquipoService {
 
         staffRecuperado.setActivo(false);
         staffTecnicoRepository.save(staffRecuperado);
-
-        return mapearAStaffResponse(staffRecuperado);
     }
 
     private EquipoResponse mapearAEquipoResponse(Equipo e) {
@@ -212,25 +206,4 @@ public class EquipoService {
                 .build();
     }
 
-    private StaffTecnicoResponse mapearAStaffResponse(StaffTecnico st) {
-        return StaffTecnicoResponse.builder()
-                .id(st.getId())
-                .nombreStaff(st.getNombreStaff())
-                .rol(st.getRol())
-                .salarioMensual(st.getSalarioMensual())
-                .activo(st.getActivo())
-                .equipoId(st.getEquipo().getId())
-                .build();
-    }
-
-    private RosterHistoricoResponse mapearARosterResponse(RosterHistorico rh) {
-        return RosterHistoricoResponse.builder()
-                .id(rh.getId())
-                .idJugador(rh.getIdJugador())
-                .nickname(rh.getNickname())
-                .fechaInicio(rh.getFechaInicio())
-                .fechaFin(rh.getFechaFin())
-                .equipoId(rh.getEquipo().getId())
-                .build();
-    }
 }
