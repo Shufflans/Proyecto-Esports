@@ -23,7 +23,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "roster_Historico")
+@Table(name = "roster_historico")
 @Builder
 public class RosterHistorico {
 

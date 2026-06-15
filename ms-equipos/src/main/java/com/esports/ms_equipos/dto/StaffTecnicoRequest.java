@@ -24,6 +24,4 @@ public class StaffTecnicoRequest {
     @Positive(message = "El salario no puede ser negativo")
     private Double salarioMensual;
 
-    @NotNull(message = "El estado activo/inactivo es obligatorio")
-    private Boolean activo;
 }

@@ -165,7 +165,7 @@ public class EquipoService {
         log.info("Desactivando al equipo de ID: {}", id);
 
         Equipo equipoEncontrado = equipoRepository.findById(id).orElseThrow(
-                () -> new EquipoNoEncontradoException("El equipo con ID: " + id + " no ha sido encontrado"));
+                () -> new EquipoNoEncontradoException("El equipo con ID: " + id + " no encontrado"));
 
         equipoEncontrado.setActivo(false);
         equipoRepository.save(equipoEncontrado);
