@@ -25,5 +25,4 @@ public class RosterHistoricoRequest {
     private LocalDate fechaInicio;
 
     private LocalDate fechaFin;
-
 }
