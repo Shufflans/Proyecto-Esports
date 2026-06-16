@@ -2,7 +2,6 @@ package com.esports.ms_juegos.controller;
 
 import com.esports.ms_juegos.dto.JuegoRequest;
 import com.esports.ms_juegos.dto.JuegoResponse;
-import com.esports.ms_juegos.model.Juego;
 import com.esports.ms_juegos.security.JwtFilter;
 import com.esports.ms_juegos.security.JwtUtil;
 import com.esports.ms_juegos.service.JuegoService;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
