@@ -28,6 +28,5 @@ public class EquipoRequest {
 
     private Integer rankingMundial;
 
-    @NotNull(message = "El estado activo/inactivo del equipo es obligatorio")
     private Boolean activo;
 }
