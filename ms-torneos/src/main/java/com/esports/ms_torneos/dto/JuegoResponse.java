@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class JuegoResponse {
     private Long idJuego;
     private String nombreJuego;
+    private Boolean activo;
 }
