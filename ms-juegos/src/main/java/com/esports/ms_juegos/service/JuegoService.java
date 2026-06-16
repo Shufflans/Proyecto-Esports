@@ -74,6 +74,7 @@ public class JuegoService {
         List<JuegoResponse> listaJuegosActivos = juegoRepository.findByActivoTrue().stream()
                 .map(this::mapearAJuego)
                 .toList();
+
         return listaJuegosActivos;
     }
 
