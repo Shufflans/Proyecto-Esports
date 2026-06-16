@@ -2,6 +2,8 @@ package com.esports.ms_torneos.dto;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,8 +29,10 @@ public class TorneoRequest {
     private String organizador;
 
     @NotNull(message = "La fecha de inicio es obligatoria")
+    @FutureOrPresent(message = "La fecha no puede ser anterior a hoy")
     private LocalDate fechaInicio;
 
+    @Future(message = "La fecha no puede ser hoy o anterior")
     private LocalDate fechaFin;
 
     @NotNull(message = "Total del premio del torneo es obligatorio")
