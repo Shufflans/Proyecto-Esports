@@ -29,8 +29,6 @@ public class Juego {
     @Column(name = "genero_juego", nullable = false)
     private String generoJuego;
 
-    private Double totalPremio;
-
     @Column(name = "activo", nullable = false)
     private Boolean activo;
 
