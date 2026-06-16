@@ -13,6 +13,5 @@ public class JuegoResponse {
     private Long id;
     private String nombreJuego;
     private String generoJuego;
-    private Double totalPremio;
     private Boolean activo;
 }

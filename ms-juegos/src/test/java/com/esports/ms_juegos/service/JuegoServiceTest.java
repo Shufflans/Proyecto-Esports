@@ -29,226 +29,221 @@ import com.esports.ms_juegos.repository.JuegoRepository;
 @ExtendWith(MockitoExtension.class)
 public class JuegoServiceTest {
 
-    @Mock
-    private JuegoRepository juegoRepository;
+        @Mock
+        private JuegoRepository juegoRepository;
 
-    @InjectMocks
-    private JuegoService juegoService;
+        @InjectMocks
+        private JuegoService juegoService;
 
-    @Test
-    void deberiarCrearUnJuego() {
-        JuegoRequest peticion = JuegoRequest.builder()
-                .nombreJuego("League of Legends")
-                .generoJuego("MOBA")
-                .totalPremio(1000.0)
-                .build();
+        @Test
+        void deberiarCrearUnJuego() {
+                JuegoRequest peticion = JuegoRequest.builder()
+                                .nombreJuego("League of Legends")
+                                .generoJuego("MOBA")
+                                .build();
 
-        when(juegoRepository.existsByNombreJuego(peticion.getNombreJuego())).thenReturn(false);
-        when(juegoRepository.save(any(Juego.class))).thenAnswer(invocation -> invocation.getArgument(0));
+                when(juegoRepository.existsByNombreJuego(peticion.getNombreJuego())).thenReturn(false);
+                when(juegoRepository.save(any(Juego.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        JuegoResponse resultado = juegoService.crearJuego(peticion);
+                JuegoResponse resultado = juegoService.crearJuego(peticion);
 
-        assertNotNull(resultado);
-        assertEquals("League of Legends", resultado.getNombreJuego());
-        assertEquals("MOBA", resultado.getGeneroJuego());
-        assertEquals(1000.0, resultado.getTotalPremio());
-        assertEquals(true, resultado.getActivo());
-        verify(juegoRepository).existsByNombreJuego("League of Legends");
-        verify(juegoRepository).save(any(Juego.class));
-    }
+                assertNotNull(resultado);
+                assertEquals("League of Legends", resultado.getNombreJuego());
+                assertEquals("MOBA", resultado.getGeneroJuego());
+                assertEquals(true, resultado.getActivo());
+                verify(juegoRepository).existsByNombreJuego("League of Legends");
+                verify(juegoRepository).save(any(Juego.class));
+        }
 
-    @Test
-    void deberiaRetornarUnJuegoPorSuId() {
-        Juego juego = Juego.builder()
-                .id(1L)
-                .nombreJuego("League of Legends")
-                .build();
+        @Test
+        void deberiaRetornarUnJuegoPorSuId() {
+                Juego juego = Juego.builder()
+                                .id(1L)
+                                .nombreJuego("League of Legends")
+                                .build();
 
-        when(juegoRepository.findById(1L)).thenReturn(Optional.of(juego));
+                when(juegoRepository.findById(1L)).thenReturn(Optional.of(juego));
 
-        JuegoResponse resultado = juegoService.buscarJuegoPorId(1L);
+                JuegoResponse resultado = juegoService.buscarJuegoPorId(1L);
 
-        assertNotNull(resultado);
-        assertEquals(1L, resultado.getId());
-        assertEquals("League of Legends", resultado.getNombreJuego());
-        verify(juegoRepository).findById(1L);
-    }
+                assertNotNull(resultado);
+                assertEquals(1L, resultado.getId());
+                assertEquals("League of Legends", resultado.getNombreJuego());
+                verify(juegoRepository).findById(1L);
+        }
 
-    @Test
-    void deberiaRetornarListaDeJuegos() {
-        Juego juego = Juego.builder()
-                .id(1L)
-                .nombreJuego("Valorant")
-                .build();
+        @Test
+        void deberiaRetornarListaDeJuegos() {
+                Juego juego = Juego.builder()
+                                .id(1L)
+                                .nombreJuego("Valorant")
+                                .build();
 
-        when(juegoRepository.findAll()).thenReturn(List.of(juego));
+                when(juegoRepository.findAll()).thenReturn(List.of(juego));
 
-        List<JuegoResponse> resultado = juegoService.listarTodosLosJuegos();
+                List<JuegoResponse> resultado = juegoService.listarTodosLosJuegos();
 
-        assertFalse(resultado.isEmpty());
-        assertEquals(1, resultado.size());
-        assertEquals("Valorant", resultado.get(0).getNombreJuego());
-        verify(juegoRepository).findAll();
-    }
+                assertFalse(resultado.isEmpty());
+                assertEquals(1, resultado.size());
+                assertEquals("Valorant", resultado.get(0).getNombreJuego());
+                verify(juegoRepository).findAll();
+        }
 
-    @Test
-    void deberiaRetornarListaDeJuegosActivos() {
-        Juego juego = Juego.builder()
-                .id(1L)
-                .nombreJuego("Counter Strike 2")
-                .activo(true)
-                .build();
+        @Test
+        void deberiaRetornarListaDeJuegosActivos() {
+                Juego juego = Juego.builder()
+                                .id(1L)
+                                .nombreJuego("Counter Strike 2")
+                                .activo(true)
+                                .build();
 
-        when(juegoRepository.findByActivoTrue()).thenReturn(List.of(juego));
+                when(juegoRepository.findByActivoTrue()).thenReturn(List.of(juego));
 
-        List<JuegoResponse> resultado = juegoService.listarJuegosActivos();
+                List<JuegoResponse> resultado = juegoService.listarJuegosActivos();
 
-        assertFalse(resultado.isEmpty());
-        assertTrue(resultado.get(0).getActivo());
-        verify(juegoRepository).findByActivoTrue();
-    }
+                assertFalse(resultado.isEmpty());
+                assertTrue(resultado.get(0).getActivo());
+                verify(juegoRepository).findByActivoTrue();
+        }
 
-    @Test
-    void deberiaRetornarListaDeJuegosPorGenero() {
-        Juego juego = Juego.builder()
-                .id(1L)
-                .nombreJuego("Dota 2")
-                .generoJuego("MOBA")
-                .build();
+        @Test
+        void deberiaRetornarListaDeJuegosPorGenero() {
+                Juego juego = Juego.builder()
+                                .id(1L)
+                                .nombreJuego("Dota 2")
+                                .generoJuego("MOBA")
+                                .build();
 
-        when(juegoRepository.findByGeneroJuego("MOBA")).thenReturn(List.of(juego));
+                when(juegoRepository.findByGeneroJuego("MOBA")).thenReturn(List.of(juego));
 
-        List<JuegoResponse> resultado = juegoService.buscarJuegoPorGenero("MOBA");
+                List<JuegoResponse> resultado = juegoService.buscarJuegoPorGenero("MOBA");
 
-        assertFalse(resultado.isEmpty());
-        assertEquals("MOBA", resultado.get(0).getGeneroJuego());
-        verify(juegoRepository).findByGeneroJuego("MOBA");
-    }
+                assertFalse(resultado.isEmpty());
+                assertEquals("MOBA", resultado.get(0).getGeneroJuego());
+                verify(juegoRepository).findByGeneroJuego("MOBA");
+        }
 
-    @Test
-    void deberiaActualizarJuego() {
-        Juego juegoGuardado = Juego.builder()
-                .id(1L)
-                .nombreJuego("FIFA 23")
-                .generoJuego("Deportes")
-                .totalPremio(10000.0)
-                .activo(true)
-                .build();
+        @Test
+        void deberiaActualizarJuego() {
+                Juego juegoGuardado = Juego.builder()
+                                .id(1L)
+                                .nombreJuego("FIFA 23")
+                                .generoJuego("Deportes")
+                                .activo(true)
+                                .build();
 
-        JuegoRequest peticionActualizar = JuegoRequest.builder()
-                .nombreJuego("EA FC 24")
-                .generoJuego("Deportes")
-                .totalPremio(20000.0)
-                .build();
+                JuegoRequest peticionActualizar = JuegoRequest.builder()
+                                .nombreJuego("EA FC 24")
+                                .generoJuego("Deportes")
+                                .build();
 
-        when(juegoRepository.findById(1L)).thenReturn(Optional.of(juegoGuardado));
-        when(juegoRepository.existsByNombreJuego("EA FC 24")).thenReturn(false);
-        when(juegoRepository.save(any(Juego.class))).thenAnswer(invocation -> invocation.getArgument(0));
+                when(juegoRepository.findById(1L)).thenReturn(Optional.of(juegoGuardado));
+                when(juegoRepository.existsByNombreJuego("EA FC 24")).thenReturn(false);
+                when(juegoRepository.save(any(Juego.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        JuegoResponse resultado = juegoService.actualizarJuego(1L, peticionActualizar);
+                JuegoResponse resultado = juegoService.actualizarJuego(1L, peticionActualizar);
 
-        assertNotNull(resultado);
-        assertEquals("EA FC 24", resultado.getNombreJuego());
-        assertEquals(20000.0, resultado.getTotalPremio());
-        verify(juegoRepository).findById(1L);
-        verify(juegoRepository).save(any(Juego.class));
-    }
+                assertNotNull(resultado);
+                assertEquals("EA FC 24", resultado.getNombreJuego());
+                verify(juegoRepository).findById(1L);
+                verify(juegoRepository).save(any(Juego.class));
+        }
 
-    @Test
-    void deberiaDesactivarAlJuegoPorId() {
-        Juego juegoGuardado = Juego.builder()
-                .id(1L)
-                .activo(true)
-                .build();
+        @Test
+        void deberiaDesactivarAlJuegoPorId() {
+                Juego juegoGuardado = Juego.builder()
+                                .id(1L)
+                                .activo(true)
+                                .build();
 
-        when(juegoRepository.findById(1L)).thenReturn(Optional.of(juegoGuardado));
+                when(juegoRepository.findById(1L)).thenReturn(Optional.of(juegoGuardado));
 
-        juegoService.desactivarJuego(1L);
+                juegoService.desactivarJuego(1L);
 
-        assertFalse(juegoGuardado.getActivo());
-        verify(juegoRepository).save(juegoGuardado);
-    }
+                assertFalse(juegoGuardado.getActivo());
+                verify(juegoRepository).save(juegoGuardado);
+        }
 
-    // Tests ERRORES
-    @Test
-    void deberiaLanzarErrorPorNombreExistenteAlCrear() {
-        JuegoRequest peticion = JuegoRequest.builder()
-                .nombreJuego("Valorant")
-                .build();
+        // Tests ERRORES
+        @Test
+        void deberiaLanzarErrorPorNombreExistenteAlCrear() {
+                JuegoRequest peticion = JuegoRequest.builder()
+                                .nombreJuego("Valorant")
+                                .build();
 
-        when(juegoRepository.existsByNombreJuego("Valorant")).thenReturn(true);
+                when(juegoRepository.existsByNombreJuego("Valorant")).thenReturn(true);
 
-        NombreDeJuegoExisteException ex = assertThrows(NombreDeJuegoExisteException.class,
-                () -> juegoService.crearJuego(peticion));
+                NombreDeJuegoExisteException ex = assertThrows(NombreDeJuegoExisteException.class,
+                                () -> juegoService.crearJuego(peticion));
 
-        assertNotNull(ex);
-        assertEquals("El Juego Valorant ya existe.", ex.getMessage());
-        verify(juegoRepository, never()).save(any(Juego.class));
-    }
+                assertNotNull(ex);
+                assertEquals("El Juego Valorant ya existe.", ex.getMessage());
+                verify(juegoRepository, never()).save(any(Juego.class));
+        }
 
-    @Test
-    void deberiaLanzarErrorPorJuegoNoEncontrado() {
-        when(juegoRepository.findById(99L)).thenReturn(Optional.empty());
+        @Test
+        void deberiaLanzarErrorPorJuegoNoEncontrado() {
+                when(juegoRepository.findById(99L)).thenReturn(Optional.empty());
 
-        JuegoNoEncontradoException ex = assertThrows(JuegoNoEncontradoException.class,
-                () -> juegoService.buscarJuegoPorId(99L));
+                JuegoNoEncontradoException ex = assertThrows(JuegoNoEncontradoException.class,
+                                () -> juegoService.buscarJuegoPorId(99L));
 
-        assertNotNull(ex);
-        assertEquals("Juego con la ID: 99 no encontrado", ex.getMessage());
-        verify(juegoRepository).findById(99L);
-    }
+                assertNotNull(ex);
+                assertEquals("Juego con la ID: 99 no encontrado", ex.getMessage());
+                verify(juegoRepository).findById(99L);
+        }
 
-    @Test
-    void deberiaLanzarJuegoNoEncontradoAlActualizar() {
-        JuegoRequest peticion = JuegoRequest.builder()
-                .nombreJuego("Smite")
-                .build();
+        @Test
+        void deberiaLanzarJuegoNoEncontradoAlActualizar() {
+                JuegoRequest peticion = JuegoRequest.builder()
+                                .nombreJuego("Smite")
+                                .build();
 
-        when(juegoRepository.findById(99L)).thenReturn(Optional.empty());
+                when(juegoRepository.findById(99L)).thenReturn(Optional.empty());
 
-        JuegoNoEncontradoException ex = assertThrows(JuegoNoEncontradoException.class,
-                () -> juegoService.actualizarJuego(99L, peticion));
+                JuegoNoEncontradoException ex = assertThrows(JuegoNoEncontradoException.class,
+                                () -> juegoService.actualizarJuego(99L, peticion));
 
-        assertNotNull(ex);
-        assertEquals("Juego con la ID: 99 no encontrado", ex.getMessage());
-        verify(juegoRepository).findById(99L);
-        verify(juegoRepository, never()).save(any(Juego.class));
-    }
+                assertNotNull(ex);
+                assertEquals("Juego con la ID: 99 no encontrado", ex.getMessage());
+                verify(juegoRepository).findById(99L);
+                verify(juegoRepository, never()).save(any(Juego.class));
+        }
 
-    @Test
-    void deberiaLanzarNombreDuplicadoAlActualizar() {
-        Juego juegoGuardado = Juego.builder()
-                .id(1L)
-                .nombreJuego("Rocket League")
-                .build();
+        @Test
+        void deberiaLanzarNombreDuplicadoAlActualizar() {
+                Juego juegoGuardado = Juego.builder()
+                                .id(1L)
+                                .nombreJuego("Rocket League")
+                                .build();
 
-        JuegoRequest peticionDuplicado = JuegoRequest.builder()
-                .nombreJuego("Valorant")
-                .build();
+                JuegoRequest peticionDuplicado = JuegoRequest.builder()
+                                .nombreJuego("Valorant")
+                                .build();
 
-        when(juegoRepository.findById(1L)).thenReturn(Optional.of(juegoGuardado));
-        when(juegoRepository.existsByNombreJuego("Valorant")).thenReturn(true);
+                when(juegoRepository.findById(1L)).thenReturn(Optional.of(juegoGuardado));
+                when(juegoRepository.existsByNombreJuego("Valorant")).thenReturn(true);
 
-        NombreDeJuegoExisteException ex = assertThrows(NombreDeJuegoExisteException.class,
-                () -> juegoService.actualizarJuego(1L, peticionDuplicado));
+                NombreDeJuegoExisteException ex = assertThrows(NombreDeJuegoExisteException.class,
+                                () -> juegoService.actualizarJuego(1L, peticionDuplicado));
 
-        assertNotNull(ex);
-        assertEquals("El Juego Valorant ya existe.", ex.getMessage());
-        verify(juegoRepository).findById(1L);
-        verify(juegoRepository, never()).save(any(Juego.class));
-    }
+                assertNotNull(ex);
+                assertEquals("El Juego Valorant ya existe.", ex.getMessage());
+                verify(juegoRepository).findById(1L);
+                verify(juegoRepository, never()).save(any(Juego.class));
+        }
 
-    @Test
-    void deberiaLanzarJuegoNoEncontradoAlDesactivar() {
-        when(juegoRepository.findById(99L)).thenReturn(Optional.empty());
+        @Test
+        void deberiaLanzarJuegoNoEncontradoAlDesactivar() {
+                when(juegoRepository.findById(99L)).thenReturn(Optional.empty());
 
-        JuegoNoEncontradoException ex = assertThrows(JuegoNoEncontradoException.class,
-                () -> juegoService.desactivarJuego(99L));
+                JuegoNoEncontradoException ex = assertThrows(JuegoNoEncontradoException.class,
+                                () -> juegoService.desactivarJuego(99L));
 
-        assertNotNull(ex);
-        assertEquals("Juego con la ID: 99 no encontrado", ex.getMessage());
-        verify(juegoRepository).findById(99L);
-        verify(juegoRepository, never()).save(any(Juego.class));
-    }
+                assertNotNull(ex);
+                assertEquals("Juego con la ID: 99 no encontrado", ex.getMessage());
+                verify(juegoRepository).findById(99L);
+                verify(juegoRepository, never()).save(any(Juego.class));
+        }
 
 }
