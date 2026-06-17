@@ -1,0 +1,293 @@
+services:
+  mysql-auth:
+    image: mysql:8
+    container_name: mysql-auth
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ms-auth
+      - MYSQL_USER=appuser
+      - MYSQL_PASSWORD=1234
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_auth_data:/var/lib/mysql
+    networks:
+      - backend-network
+
+  mysql-equipos:
+    image: mysql:8
+    container_name: mysql-equipos
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ms-equipos
+      - MYSQL_USER=appuser
+      - MYSQL_PASSWORD=1234
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_equipos_data:/var/lib/mysql
+    networks:
+      - backend-network
+
+  mysql-estadisticas:
+    image: mysql:8
+    container_name: mysql-estadisticas
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ms-estadisticas
+      - MYSQL_USER=appuser
+      - MYSQL_PASSWORD=1234
+    ports:
+      - "3309:3306"
+    volumes:
+      - mysql_estadisticas_data:/var/lib/mysql
+    networks:
+      - backend-network
+
+  mysql-juegos:
+    image: mysql:8
+    container_name: mysql-juegos
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ms-juegos
+      - MYSQL_USER=appuser
+      - MYSQL_PASSWORD=1234
+    ports:
+      - "3310:3306"
+    volumes:
+      - mysql_juegos_data:/var/lib/mysql
+    networks:
+      - backend-network
+
+  mysql-jugadores:
+    image: mysql:8
+    container_name: mysql-jugadores
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ms-jugadores
+      - MYSQL_USER=appuser
+      - MYSQL_PASSWORD=1234
+    ports:
+      - "3311:3306"
+    volumes:
+      - mysql_jugadores_data:/var/lib/mysql
+    networks:
+      - backend-network
+
+  mysql-partidas:
+    image: mysql:8
+    container_name: mysql-partidas
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ms-partidas
+      - MYSQL_USER=appuser
+      - MYSQL_PASSWORD=1234
+    ports:
+      - "3312:3306"
+    volumes:
+      - mysql_partidas_data:/var/lib/mysql
+    networks:
+      - backend-network
+
+  mysql-torneos:
+    image: mysql:8
+    container_name: mysql-torneos
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ms-torneos
+      - MYSQL_USER=appuser
+      - MYSQL_PASSWORD=1234
+    ports:
+      - "3313:3306"
+    volumes:
+      - mysql_torneos_data:/var/lib/mysql
+    networks:
+      - backend-network
+  ms-eureka:
+    build: ./ms-eureka
+    container_name: ms-eureka
+    restart: unless-stopped
+    ports:
+      - "8761:8761"
+    networks:
+      - backend-network
+
+  ms-gateway:
+    build: ./ms-gateway
+    container_name: ms-gateway
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_URL=http://ms-eureka:8761/eureka/
+    depends_on:
+      - ms-eureka
+      - ms-auth
+      - ms-equipos
+      - ms-estadisticas
+      - ms-juegos
+      - ms-jugadores
+      - ms-partidas
+      - ms-torneos
+    networks:
+      - backend-network
+
+  ms-auth:
+    build: ./ms-auth
+    container_name: ms-auth
+    restart: unless-stopped
+    ports:
+      - "8082:8082"
+    environment:
+      - DB_HOST=mysql-auth
+      - DB_PORT=3306
+      - DB_NAME=ms-auth
+      - DB_USER=appuser
+      - DB_PASSWORD=1234
+      - JWT_SECRET=clave_super_secreta_12345678901234567890
+      - EUREKA_URL=http://ms-eureka:8761/eureka/
+    depends_on:
+      - mysql-auth
+      - ms-eureka
+    networks:
+      - backend-network
+
+  ms-equipos:
+    build: ./ms-equipos
+    container_name: ms-equipos
+    restart: unless-stopped
+    ports:
+      - "8083:8083"
+    environment:
+      - DB_HOST=mysql-equipos
+      - DB_PORT=3306
+      - DB_NAME=ms-equipos
+      - DB_USER=appuser
+      - DB_PASSWORD=1234
+      - JWT_SECRET=clave_super_secreta_12345678901234567890
+      - EUREKA_URL=http://ms-eureka:8761/eureka/
+    depends_on:
+      - mysql-equipos
+      - ms-eureka
+    networks:
+      - backend-network
+
+  ms-estadisticas:
+    build: ./ms-estadisticas
+    container_name: ms-estadisticas
+    restart: unless-stopped
+    ports:
+      - "8088:8088"
+    environment:
+      - DB_HOST=mysql-estadisticas
+      - DB_PORT=3306
+      - DB_NAME=ms-estadisticas
+      - DB_USER=appuser
+      - DB_PASSWORD=1234
+      - JWT_SECRET=clave_super_secreta_12345678901234567890
+      - EUREKA_URL=http://ms-eureka:8761/eureka/
+    depends_on:
+      - mysql-estadisticas
+      - ms-eureka
+    networks:
+      - backend-network
+
+  ms-juegos:
+    build: ./ms-juegos
+    container_name: ms-juegos
+    restart: unless-stopped
+    ports:
+      - "8085:8085"
+    environment:
+      - DB_HOST=mysql-juegos
+      - DB_PORT=3306
+      - DB_NAME=ms-juegos
+      - DB_USER=appuser
+      - DB_PASSWORD=1234
+      - JWT_SECRET=clave_super_secreta_12345678901234567890
+      - EUREKA_URL=http://ms-eureka:8761/eureka/
+    depends_on:
+      - mysql-juegos
+      - ms-eureka
+    networks:
+      - backend-network
+
+  ms-jugadores:
+    build: ./ms-jugadores
+    container_name: ms-jugadores
+    restart: unless-stopped
+    ports:
+      - "8084:8084"
+    environment:
+      - DB_HOST=mysql-jugadores
+      - DB_PORT=3306
+      - DB_NAME=ms-jugadores
+      - DB_USER=appuser
+      - DB_PASSWORD=1234
+      - JWT_SECRET=clave_super_secreta_12345678901234567890
+      - EUREKA_URL=http://ms-eureka:8761/eureka/
+    depends_on:
+      - mysql-jugadores
+      - ms-eureka
+    networks:
+      - backend-network
+
+  ms-partidas:
+    build: ./ms-partidas
+    container_name: ms-partidas
+    restart: unless-stopped
+    ports:
+      - "8087:8087"
+    environment:
+      - DB_HOST=mysql-partidas
+      - DB_PORT=3306
+      - DB_NAME=ms-partidas
+      - DB_USER=appuser
+      - DB_PASSWORD=1234
+      - JWT_SECRET=clave_super_secreta_12345678901234567890
+      - EUREKA_URL=http://ms-eureka:8761/eureka/
+    depends_on:
+      - mysql-partidas
+      - ms-eureka
+    networks:
+      - backend-network
+
+  ms-torneos:
+    build: ./ms-torneos
+    container_name: ms-torneos
+    restart: unless-stopped
+    ports:
+      - "8086:8086"
+    environment:
+      - DB_HOST=mysql-torneos
+      - DB_PORT=3306
+      - DB_NAME=ms-torneos
+      - DB_USER=appuser
+      - DB_PASSWORD=1234
+      - JWT_SECRET=clave_super_secreta_12345678901234567890
+      - EUREKA_URL=http://ms-eureka:8761/eureka/
+    depends_on:
+      - mysql-torneos
+      - ms-eureka
+    networks:
+      - backend-network
+      
+networks:
+  backend-network:
+    driver: bridge
+
+volumes:
+  mysql_auth_data:
+  mysql_equipos_data:
+  mysql_estadisticas_data:
+  mysql_juegos_data:
+  mysql_jugadores_data:
+  mysql_partidas_data:
+  mysql_torneos_data:
