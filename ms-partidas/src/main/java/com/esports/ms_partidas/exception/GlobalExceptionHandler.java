@@ -19,10 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // =========================================================================
-    // EXCEPCIONES 404 NOT FOUND (Cosas que no existen)
-    // =========================================================================
-
     @ExceptionHandler(PartidaNoExisteException.class)
     public ResponseEntity<ErrorResponse> handlePartidaNoExiste(PartidaNoExisteException ex, HttpServletRequest rq) {
         log.warn("Partida no encontrada: {} | URI: {}", ex.getMessage(), rq.getRequestURI());
@@ -67,10 +63,6 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
-
-    // =========================================================================
-    // EXCEPCIONES 400 BAD REQUEST (Reglas de negocio)
-    // =========================================================================
 
     @ExceptionHandler(MismoEquipoException.class)
     public ResponseEntity<ErrorResponse> handleMismoEquipo(MismoEquipoException ex, HttpServletRequest rq) {
@@ -133,10 +125,6 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
-
-    // =========================================================================
-    // EXCEPCIONES GENÉRICAS DEL SISTEMA (Idénticas a tu ms_juegos)
-    // =========================================================================
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidacion(MethodArgumentNotValidException ex, HttpServletRequest rq) {
