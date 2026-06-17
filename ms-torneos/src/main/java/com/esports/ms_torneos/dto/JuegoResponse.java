@@ -1,4 +1,4 @@
-package com.esports.ms_juegos.dto;
+package com.esports.ms_torneos.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,12 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class JuegoResponse {
-    private Long id;
+    private Long idJuego;
     private String nombreJuego;
-    private String generoJuego;
     private Boolean activo;
 }

@@ -84,7 +84,6 @@ public class JuegoController {
                         @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Juegos no encontrados")
         })
         @GetMapping
-        @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
         public ResponseEntity<ApiResponse<List<JuegoResponse>>> mostrarTodosLosJuegos() {
                 log.info("GET /api/v1/juegos - Mostrando los Juegos");
 

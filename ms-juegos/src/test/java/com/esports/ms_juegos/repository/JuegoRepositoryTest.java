@@ -21,145 +21,135 @@ import com.esports.ms_juegos.model.Juego;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class JuegoRepositoryTest {
 
-    @Autowired
-    private JuegoRepository juegoRepository;
+        @Autowired
+        private JuegoRepository juegoRepository;
 
-    @Test
-    void debeBuscarPorId() {
-        Juego juego = Juego.builder()
-                .nombreJuego("League of Legends")
-                .generoJuego("MOBA")
-                .totalPremio(50000.0)
-                .activo(true)
-                .build();
-        Juego guardado = juegoRepository.save(juego);
+        @Test
+        void debeBuscarPorId() {
+                Juego juego = Juego.builder()
+                                .nombreJuego("League of Legends")
+                                .generoJuego("MOBA")
+                                .activo(true)
+                                .build();
+                Juego guardado = juegoRepository.save(juego);
 
-        Optional<Juego> resultado = juegoRepository.findById(guardado.getId());
+                Optional<Juego> resultado = juegoRepository.findById(guardado.getId());
 
-        assertTrue(resultado.isPresent());
-        assertEquals("League of Legends", resultado.get().getNombreJuego());
-        assertEquals("MOBA", resultado.get().getGeneroJuego());
-    }
+                assertTrue(resultado.isPresent());
+                assertEquals("League of Legends", resultado.get().getNombreJuego());
+                assertEquals("MOBA", resultado.get().getGeneroJuego());
+        }
 
-    @Test
-    void debeRevisarSiExiste() {
-        Juego juego = Juego.builder()
-                .nombreJuego("Dota 2")
-                .generoJuego("MOBA")
-                .totalPremio(100000.0)
-                .activo(true)
-                .build();
-        Juego guardado = juegoRepository.save(juego);
+        @Test
+        void debeRevisarSiExiste() {
+                Juego juego = Juego.builder()
+                                .nombreJuego("Dota 2")
+                                .generoJuego("MOBA")
+                                .activo(true)
+                                .build();
+                Juego guardado = juegoRepository.save(juego);
 
-        boolean resultado = juegoRepository.existsByNombreJuego(guardado.getNombreJuego());
+                boolean resultado = juegoRepository.existsByNombreJuego(guardado.getNombreJuego());
 
-        assertTrue(resultado);
-    }
+                assertTrue(resultado);
+        }
 
-    @Test
-    void debeRetornarListaPorGenero() {
-        Juego juego = Juego.builder()
-                .nombreJuego("Counter Strike 2")
-                .generoJuego("Shooter")
-                .totalPremio(40000.0)
-                .activo(true)
-                .build();
+        @Test
+        void debeRetornarListaPorGenero() {
+                Juego juego = Juego.builder()
+                                .nombreJuego("Counter Strike 2")
+                                .generoJuego("Shooter")
+                                .activo(true)
+                                .build();
 
-        Juego juego2 = Juego.builder()
-                .nombreJuego("Overwatch 2")
-                .generoJuego("Shooter")
-                .totalPremio(20000.0)
-                .activo(true)
-                .build();
+                Juego juego2 = Juego.builder()
+                                .nombreJuego("Overwatch 2")
+                                .generoJuego("Shooter")
+                                .activo(true)
+                                .build();
 
-        juegoRepository.save(juego);
-        juegoRepository.save(juego2);
+                juegoRepository.save(juego);
+                juegoRepository.save(juego2);
 
-        List<Juego> resultado = juegoRepository.findByGeneroJuego("Shooter");
+                List<Juego> resultado = juegoRepository.findByGeneroJuego("Shooter");
 
-        assertFalse(resultado.isEmpty());
-        assertTrue(resultado.size() >= 2);
-    }
+                assertFalse(resultado.isEmpty());
+                assertTrue(resultado.size() >= 2);
+        }
 
-    @Test
-    void debeRetornarJuegoQueEsteActivo() {
-        Juego juego = Juego.builder()
-                .nombreJuego("Rocket League")
-                .generoJuego("Deportes")
-                .totalPremio(15000.0)
-                .activo(true)
-                .build();
+        @Test
+        void debeRetornarJuegoQueEsteActivo() {
+                Juego juego = Juego.builder()
+                                .nombreJuego("Rocket League")
+                                .generoJuego("Deportes")
+                                .activo(true)
+                                .build();
 
-        Juego juego2 = Juego.builder()
-                .nombreJuego("FIFA 24")
-                .generoJuego("Deportes")
-                .totalPremio(10000.0)
-                .activo(true)
-                .build();
+                Juego juego2 = Juego.builder()
+                                .nombreJuego("FIFA 24")
+                                .generoJuego("Deportes")
+                                .activo(true)
+                                .build();
 
-        juegoRepository.save(juego);
-        juegoRepository.save(juego2);
+                juegoRepository.save(juego);
+                juegoRepository.save(juego2);
 
-        List<Juego> resultado = juegoRepository.findByActivoTrue();
+                List<Juego> resultado = juegoRepository.findByActivoTrue();
 
-        assertFalse(resultado.isEmpty());
-        assertTrue(resultado.size() >= 2);
-    }
+                assertFalse(resultado.isEmpty());
+                assertTrue(resultado.size() >= 2);
+        }
 
-    @Test
-    void debeGuardarJuego() {
-        Juego juego = Juego.builder()
-                .nombreJuego("Street Fighter 6")
-                .generoJuego("Peleas")
-                .totalPremio(12000.0)
-                .activo(true)
-                .build();
+        @Test
+        void debeGuardarJuego() {
+                Juego juego = Juego.builder()
+                                .nombreJuego("Street Fighter 6")
+                                .generoJuego("Peleas")
+                                .activo(true)
+                                .build();
 
-        Juego resultado = juegoRepository.save(juego);
+                Juego resultado = juegoRepository.save(juego);
 
-        assertEquals("Street Fighter 6", resultado.getNombreJuego());
-        assertNotNull(resultado.getId());
-    }
+                assertEquals("Street Fighter 6", resultado.getNombreJuego());
+                assertNotNull(resultado.getId());
+        }
 
-    @Test
-    void debeListarTodosLosJuegos() {
-        Juego juego = Juego.builder()
-                .nombreJuego("Tekken 8")
-                .generoJuego("Peleas")
-                .totalPremio(15000.0)
-                .activo(true)
-                .build();
+        @Test
+        void debeListarTodosLosJuegos() {
+                Juego juego = Juego.builder()
+                                .nombreJuego("Tekken 8")
+                                .generoJuego("Peleas")
+                                .activo(true)
+                                .build();
 
-        Juego juego2 = Juego.builder()
-                .nombreJuego("Mortal Kombat 1")
-                .generoJuego("Peleas")
-                .totalPremio(18000.0)
-                .activo(true)
-                .build();
+                Juego juego2 = Juego.builder()
+                                .nombreJuego("Mortal Kombat 1")
+                                .generoJuego("Peleas")
+                                .activo(true)
+                                .build();
 
-        juegoRepository.save(juego);
-        juegoRepository.save(juego2);
+                juegoRepository.save(juego);
+                juegoRepository.save(juego2);
 
-        List<Juego> resultado = juegoRepository.findAll();
+                List<Juego> resultado = juegoRepository.findAll();
 
-        assertFalse(resultado.isEmpty());
-        assertTrue(resultado.size() >= 2);
-    }
+                assertFalse(resultado.isEmpty());
+                assertTrue(resultado.size() >= 2);
+        }
 
-    @Test
-    void debeEliminarUnJuego() {
-        Juego juego = Juego.builder()
-                .nombreJuego("Smite")
-                .generoJuego("MOBA")
-                .totalPremio(8000.0)
-                .activo(true)
-                .build();
+        @Test
+        void debeEliminarUnJuego() {
+                Juego juego = Juego.builder()
+                                .nombreJuego("Smite")
+                                .generoJuego("MOBA")
+                                .activo(true)
+                                .build();
 
-        Juego guardado = juegoRepository.save(juego);
-        juegoRepository.delete(guardado);
+                Juego guardado = juegoRepository.save(juego);
+                juegoRepository.delete(guardado);
 
-        Optional<Juego> resultado = juegoRepository.findById(guardado.getId());
+                Optional<Juego> resultado = juegoRepository.findById(guardado.getId());
 
-        assertFalse(resultado.isPresent());
-    }
+                assertFalse(resultado.isPresent());
+        }
 }

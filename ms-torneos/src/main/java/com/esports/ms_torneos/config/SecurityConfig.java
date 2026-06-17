@@ -1,4 +1,4 @@
-package com.esports.ms_juegos.config;
+package com.esports.ms_torneos.config;
 
 import org.springframework.context.annotation.*;
 import org.springframework.http.HttpMethod;
@@ -6,7 +6,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.*;
 
-import com.esports.ms_juegos.security.JwtFilter;
+import com.esports.ms_torneos.security.JwtFilter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletResponse;
 
-import com.esports.ms_juegos.dto.ApiResponse;
+import com.esports.ms_torneos.dto.ApiResponse;
 
 @Configuration
 @RequiredArgsConstructor
@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/api/v1/juegos/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/torneos/**").permitAll()
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",

@@ -35,7 +35,6 @@ public class JuegoService {
 
         juegoNuevo.setNombreJuego(jr.getNombreJuego());
         juegoNuevo.setGeneroJuego(jr.getGeneroJuego());
-        juegoNuevo.setTotalPremio(jr.getTotalPremio());
         juegoNuevo.setActivo(true);
 
         juegoRepository.save(juegoNuevo);
@@ -106,7 +105,6 @@ public class JuegoService {
 
         juegoBuscado.setNombreJuego(jr.getNombreJuego());
         juegoBuscado.setGeneroJuego(jr.getGeneroJuego());
-        juegoBuscado.setTotalPremio(jr.getTotalPremio());
 
         juegoRepository.save(juegoBuscado);
 
@@ -131,7 +129,6 @@ public class JuegoService {
                 .id(j.getId())
                 .nombreJuego(j.getNombreJuego())
                 .generoJuego(j.getGeneroJuego())
-                .totalPremio(j.getTotalPremio())
                 .activo(j.getActivo())
                 .build();
     }
