@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TrasnferenciaRequest {
+public class TransferenciaRequest {
 
     @NotNull(message = "El ID del jugador es obligatorio")
     private Long idJugador;
