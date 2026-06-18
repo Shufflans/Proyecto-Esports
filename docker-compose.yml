@@ -110,6 +110,70 @@ services:
       - mysql_torneos_data:/var/lib/mysql
     networks:
       - backend-network
+
+  mysql-transferencias:
+    image: mysql:8
+    container_name: mysql-transferencias
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ms_transferencias
+      - MYSQL_USER=appuser
+      - MYSQL_PASSWORD=1234
+    ports:
+      - "3314:3306"
+    volumes:
+      - mysql_transferencias_data:/var/lib/mysql
+    networks:
+      - backend-network
+
+  mysql-rankings:
+    image: mysql:8
+    container_name: mysql-rankings
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ms_rankings
+      - MYSQL_USER=appuser
+      - MYSQL_PASSWORD=1234
+    ports:
+      - "3315:3306"
+    volumes:
+      - mysql_rankings_data:/var/lib/mysql
+    networks:
+      - backend-network
+
+  mysql-notificaciones:
+    image: mysql:8
+    container_name: mysql-notificaciones
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ms_notificaciones
+      - MYSQL_USER=appuser
+      - MYSQL_PASSWORD=1234
+    ports:
+      - "3316:3306"
+    volumes:
+      - mysql_notificaciones_data:/var/lib/mysql
+    networks:
+      - backend-network
+
+  mysql-patrocinadores:
+    image: mysql:8
+    container_name: mysql-patrocinadores
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ms_patrocinadores
+      - MYSQL_USER=appuser
+      - MYSQL_PASSWORD=1234
+    ports:
+      - "3317:3306"
+    volumes:
+      - mysql_patrocinadores_data:/var/lib/mysql
+    networks:
+      - backend-network
   ms-eureka:
     build: ./ms-eureka
     container_name: ms-eureka
@@ -136,6 +200,10 @@ services:
       - ms-jugadores
       - ms-partidas
       - ms-torneos
+      - ms-transferencias
+      - ms-rankings
+      - ms-notificaciones
+      - ms-patrocinadores
     networks:
       - backend-network
 
@@ -279,6 +347,86 @@ services:
     networks:
       - backend-network
       
+  ms-transferencias:
+    build: ./ms-transferencias
+    container_name: ms-transferencias
+    restart: unless-stopped
+    ports:
+      - "8089:8089"
+    environment:
+      - DB_HOST=mysql-transferencias
+      - DB_PORT=3306
+      - DB_NAME=ms_transferencias
+      - DB_USER=appuser
+      - DB_PASSWORD=1234
+      - JWT_SECRET=clave_super_secreta_12345678901234567890
+      - EUREKA_URL=http://ms-eureka:8761/eureka/
+    depends_on:
+      - mysql-transferencias
+      - ms-eureka
+    networks:
+      - backend-network
+
+  ms-rankings:
+    build: ./ms-rankings
+    container_name: ms-rankings
+    restart: unless-stopped
+    ports:
+      - "8090:8090"
+    environment:
+      - DB_HOST=mysql-rankings
+      - DB_PORT=3306
+      - DB_NAME=ms_rankings
+      - DB_USER=appuser
+      - DB_PASSWORD=1234
+      - JWT_SECRET=clave_super_secreta_12345678901234567890
+      - EUREKA_URL=http://ms-eureka:8761/eureka/
+    depends_on:
+      - mysql-rankings
+      - ms-eureka
+    networks:
+      - backend-network
+
+  ms-notificaciones:
+    build: ./ms-notificaciones
+    container_name: ms-notificaciones
+    restart: unless-stopped
+    ports:
+      - "8091:8091"
+    environment:
+      - DB_HOST=mysql-notificaciones
+      - DB_PORT=3306
+      - DB_NAME=ms_notificaciones
+      - DB_USER=appuser
+      - DB_PASSWORD=1234
+      - JWT_SECRET=clave_super_secreta_12345678901234567890
+      - EUREKA_URL=http://ms-eureka:8761/eureka/
+    depends_on:
+      - mysql-notificaciones
+      - ms-eureka
+    networks:
+      - backend-network
+
+  ms-patrocinadores:
+    build: ./ms-patrocinadores
+    container_name: ms-patrocinadores
+    restart: unless-stopped
+    ports:
+      - "8092:8092"
+    environment:
+      - DB_HOST=mysql-patrocinadores
+      - DB_PORT=3306
+      - DB_NAME=ms_patrocinadores
+      - DB_USER=appuser
+      - DB_PASSWORD=1234
+      - JWT_SECRET=clave_super_secreta_12345678901234567890
+      - EUREKA_URL=http://ms-eureka:8761/eureka/
+    depends_on:
+      - mysql-patrocinadores
+      - ms-eureka
+    networks:
+      - backend-network
+    
 networks:
   backend-network:
     driver: bridge
@@ -291,3 +439,7 @@ volumes:
   mysql_jugadores_data:
   mysql_partidas_data:
   mysql_torneos_data:
+  mysql_transferencias_data:
+  mysql_rankings_data:
+  mysql_notificaciones_data:
+  mysql_patrocinadores_data:
