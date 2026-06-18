@@ -47,10 +47,8 @@ public class NotificacionService {
         notificacionNueva.setMensaje(nr.getMensaje());
         notificacionNueva.setEstado("NO_LEIDA");
         notificacionNueva.setFechaCreacion(LocalDateTime.now());
-
-        notificacionRepository.save(notificacionNueva);
-
-        return mapearANotificacionResponse(notificacionNueva);
+        Notificacion notificacionGuardada = notificacionRepository.save(notificacionNueva);
+        return mapearANotificacionResponse(notificacionGuardada);
     }
 
     @Transactional
