@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Autenticación", description = "Operaciones de registro, login y renovación de Token")
+@Tag(name = "Autenticación", description = "Operaciones de registro, login y renovación de Token.")
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -31,7 +31,7 @@ public class AuthController {
 
         private final AuthService authService;
 
-        @Operation(summary = "Registro", description = "Registra al usuario entregandole un Token")
+        @Operation(summary = "Registro de Usuario", description = "Registra al usuario entregandole un Token")
         @ApiResponses(value = {
                         @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Usuario registrado con éxito"),
                         @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Solicitud inválida"),

@@ -31,7 +31,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Tag(name = "Jugadores", description = "Operaciones relacionadas con jugadores")
+@Tag(name = "Jugadores", description = "Operaciones relacionadas con jugadores.")
 @RestController
 @RequestMapping("/api/v1/jugadores")
 @RequiredArgsConstructor
@@ -69,7 +69,6 @@ public class JugadorController {
                         @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Acceso denegado")
         })
         @GetMapping
-        @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
         public ResponseEntity<ApiResponse<List<JugadorResponse>>> listarJugadores() {
                 log.info("GET /api/v1/jugadores - Lista");
 
@@ -83,7 +82,7 @@ public class JugadorController {
                                                 .build());
         }
 
-        @Operation(summary = "Buscar Jugadores ID", description = "Retorna al jugador buscado por su ID.")
+        @Operation(summary = "Buscar Jugadores Por ID", description = "Retorna al jugador buscado por su ID.")
         @ApiResponses(value = {
                         @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Devuelve al jugador encontrado"),
                         @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Jugador no encontrado"),
@@ -91,8 +90,8 @@ public class JugadorController {
                         @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Acceso denegado")
         })
         @GetMapping("/{id}")
-        @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-        public ResponseEntity<ApiResponse<EntityModel<JugadorResponse>>> buscarJugadoresId(@PathVariable Long id) {
+        public ResponseEntity<ApiResponse<EntityModel<JugadorResponse>>> buscarJugadoresId(
+                        @Parameter(description = "Ingresa el ID del jugador que deseas buscar", example = "1") @PathVariable Long id) {
                 log.info("GET /api/v1/jugadores - ID: {}", id);
 
                 JugadorResponse encontrado = jugadorService.buscarPorId(id);
@@ -120,8 +119,8 @@ public class JugadorController {
                         @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Acceso denegado")
         })
         @GetMapping("/pais/{pais}")
-        @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-        public ResponseEntity<ApiResponse<List<JugadorResponse>>> mostrarPorPais(@PathVariable String pais) {
+        public ResponseEntity<ApiResponse<List<JugadorResponse>>> mostrarPorPais(
+                        @Parameter(example = "Chile", description = "Se debe colocar el país del jugador que se desea buscar") @PathVariable String pais) {
                 log.info("GET /api/v1/jugadores - pais: {}", pais);
 
                 List<JugadorResponse> jugadoresEncontrados = jugadorService.mostrarPorPaises(pais);
@@ -129,7 +128,7 @@ public class JugadorController {
                 return ResponseEntity.ok(
                                 ApiResponse.<List<JugadorResponse>>builder()
                                                 .success(true)
-                                                .message("Jugador encontrado")
+                                                .message("Jugadores encontrados")
                                                 .data(jugadoresEncontrados)
                                                 .build());
         }

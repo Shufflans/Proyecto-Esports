@@ -11,8 +11,10 @@ public class OpenApiConfig {
     public OpenAPI openAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Microservicio Auth API")
+                        .title("E-SPORTS - Microservicio Autenticación API")
                         .version("1.0")
-                        .description("Documentación del microservicio de autenticación"));
+                        .description(
+                                "Documentación del microservicio de autenticación." +
+                                        "En este microservicio podrás registrarte, logearte y mantener el ciclo de vida del JWT Token"));
     }
 }
