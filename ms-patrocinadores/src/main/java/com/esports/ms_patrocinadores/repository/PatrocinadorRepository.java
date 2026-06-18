@@ -1,0 +1,8 @@
+package com.esports.ms_patrocinadores.repository;
+
+import com.esports.ms_patrocinadores.model.Patrocinador;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PatrocinadorRepository extends JpaRepository<Patrocinador, Long> {
+
+}
