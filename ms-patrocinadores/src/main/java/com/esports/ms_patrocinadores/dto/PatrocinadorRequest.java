@@ -8,11 +8,9 @@ import java.time.LocalDate;
 public class PatrocinadorRequest {
 
     @NotBlank(message = "El nombre de la marca no puede estar vacío")
-    @Size(min = 2, max = 100, message = "El nombre de la marca debe tener entre 2 y 100 caracteres")
     private String nombreMarca;
 
     @NotNull(message = "El ID del equipo es obligatorio")
-    @Positive(message = "El ID del equipo debe ser un número positivo")
     private Long idEquipo;
 
     @NotNull(message = "El monto anual es obligatorio")
