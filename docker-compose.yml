@@ -183,30 +183,6 @@ services:
     networks:
       - backend-network
 
-  ms-gateway:
-    build: ./ms-gateway
-    container_name: ms-gateway
-    restart: unless-stopped
-    ports:
-      - "8080:8080"
-    environment:
-      - EUREKA_URL=http://ms-eureka:8761/eureka/
-    depends_on:
-      - ms-eureka
-      - ms-auth
-      - ms-equipos
-      - ms-estadisticas
-      - ms-juegos
-      - ms-jugadores
-      - ms-partidas
-      - ms-torneos
-      - ms-transferencias
-      - ms-rankings
-      - ms-notificaciones
-      - ms-patrocinadores
-    networks:
-      - backend-network
-
   ms-auth:
     build: ./ms-auth
     container_name: ms-auth
@@ -424,6 +400,30 @@ services:
     depends_on:
       - mysql-patrocinadores
       - ms-eureka
+    networks:
+      - backend-network
+
+  ms-gateway:
+    build: ./ms-gateway
+    container_name: ms-gateway
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_URL=http://ms-eureka:8761/eureka/
+    depends_on:
+      - ms-eureka
+      - ms-auth
+      - ms-equipos
+      - ms-estadisticas
+      - ms-juegos
+      - ms-jugadores
+      - ms-partidas
+      - ms-torneos
+      - ms-transferencias
+      - ms-rankings
+      - ms-notificaciones
+      - ms-patrocinadores
     networks:
       - backend-network
     
