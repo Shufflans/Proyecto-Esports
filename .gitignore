@@ -1,8 +1,12 @@
 **/logs/
 logs/
 .vscode/
+**/target/
 .metadata/
 .classpath
 .project
 .settings/
+
 .github/
+
+target/
