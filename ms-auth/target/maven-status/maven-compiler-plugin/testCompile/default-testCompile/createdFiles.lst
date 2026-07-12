@@ -1,0 +1,4 @@
+com\esports\ms_auth\controller\AuthControllerTest.class
+com\esports\ms_auth\repository\UsuarioRepositoryTest.class
+com\esports\ms_auth\service\AuthServiceTest.class
+com\esports\ms_auth\MsAuthApplicationTests.class
