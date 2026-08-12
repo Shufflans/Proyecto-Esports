@@ -8,7 +8,6 @@ tiene una integración de seguridad con la autenticación de los usuarios. Todo 
 ##  Integrantes del Equipo
 
 - Camilo Covarrubias
-- Ignacio Vallejos
 
 ## Microservicios Implementados:
 
